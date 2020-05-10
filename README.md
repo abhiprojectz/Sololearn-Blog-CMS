@@ -5,7 +5,7 @@
 
 # Support the project by giving it a star!
 
-![Check out on Github : ](https://github.com/abhiprojectz/Sololearn-Blog-CMS)
+[Check out on Github : ](https://github.com/abhiprojectz/Sololearn-Blog-CMS)
 
 ![](https://uploads-ssl.webflow.com/5a9e6c4d3dd0520001f5b761/5e8501fb8845b86ea920886a_tech_leads.png)
 
