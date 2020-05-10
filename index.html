@@ -1,0 +1,205 @@
+<!-- sololearn BLOG CMS created by Abhi!-->
+
+<!-- Markdown support!-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sololearn Blog CMS</title>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+         <meta name="viewport" content="width=device-width, initial-scale=1"> <script src="https://kit.fontawesome.com/97cc306c60.js" crossorigin="anonymous"></script>
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   <link rel="stylesheet" href="css.css"></link>
+    </head>
+    <body>
+    
+    
+    <div id="loader">
+         <div id="space">
+            <p style="color:#fff;text-align:center;font-family:Passion one;font-size:25px;">Sololearn Blog CMS </p>
+         </div>
+         <!--     Loader svg      -->
+         <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+            <g fill="none" fill-rule="evenodd" stroke-width="2">
+               <circle cx="22" cy="22" r="19.4407">
+                  <animate attributeName="r" begin="0s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"></animate>
+                  <animate attributeName="stroke-opacity" begin="0s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"></animate>
+               </circle>
+               <circle cx="22" cy="22" r="11.526">
+                  <animate attributeName="r" begin="-0.9s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"></animate>
+                  <animate attributeName="stroke-opacity" begin="-0.9s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"></animate>
+               </circle>
+            </g>
+         </svg>
+      </div>
+      <!--      Main project starts     -->
+      <div id="super"/>
+        
+<div id="header">
+    <i id="menu" class="far fa-minus-square"></i>
+    Sololearn Blog CMS
+    <i id="code" class="fas fa-code"></i>
+</div>
+
+        <div id="main">
+        <h1>My Blog on sololearn!</h1>
+        <p>CMS is content management system Fork it then host your own blog for free! Don't miss to read the first blog!</p>
+            <ul id="cards">
+                
+            </ul>
+            <h3 class="made_by">Made By Abhiprojectz || abhi 2020</h3>
+
+
+
+        </div>
+        
+        <div id="blog"></div>
+        
+        <div id="app"></div>
+        <div id="codeapp"></div>
+        
+    </body>
+    <script>
+        function loader() {
+    $("#loader").hide();
+    $("#super").show();
+}
+
+setTimeout(loader , 3000);
+
+
+        
+    </script>
+    <script>
+        
+        <!-- vARS ----->
+        
+        var cors = "https://cors-anywhere.herokuapp.com/";
+        
+        var userurl = "https://www.sololearn.com/Profile/14346718/?ref=app";
+        
+        var codeurl = "https://code.sololearn.com/";
+        
+        var url = cors + userurl;
+        
+        
+        fetch(url).then(function(response) {
+  if(response.ok) {
+    response.text().then(function(data) {
+        
+        main(data);
+    
+    });
+  } else {
+    console.log('Network request failed with response ' + response.status + ': ' + response.statusText);
+  }
+});
+
+
+function main(data) {
+
+   $("#app").html(data);
+   
+ 
+ $("#app .codeName").each(function(index, element) {
+ 
+ var link = $(this).find("a").attr('href').slice(27,-2) ;
+ 
+ var name = $(this).find("a").text();
+ 
+ var date = $(this).find(".codeDate").text();
+ 
+ 
+ 
+           setup(name,link,date);
+       
+return index < 4;
+})
+}
+
+
+
+function setup(name,link,date) {
+    
+    var random = Math.floor((Math.random() * 100) + 1);
+    
+    document.getElementById("cards").innerHTML += '<li class="cards_item"><div class="card"><div class="card_image"><img src="https://picsum.photos/500/300/?image='+random+ '"></div><div class="card_content"><h2 class="card_title">'+ name+'</h2><p class="card_text">'+date+'</p><button id="'+link+'" onclick="handler(this.id);" class="btn card_btn">View Post</button></div></div></li>';
+    
+    
+    
+}
+
+
+function handler(data) {
+
+var link = data;
+
+    fetchblog(link);
+}
+
+
+function fetchblog(link) {
+    
+    
+    var uurl = cors + codeurl + link;
+    
+    fetch(uurl).then(function(response) {
+  if(response.ok) {
+    response.text().then(function(data) {
+        
+        blog(data);
+    
+    });
+  } else {
+    console.log('Network request failed with response ' + response.status + ': ' + response.statusText);
+  }
+});
+    
+}
+
+function convert(data){
+    return marked(data);
+    }
+
+
+function blog(data) {
+    
+    $("#main").hide();
+    
+
+   $("#codeapp").html(data);
+   var html = $("#codeapp").html();
+   
+ var hcode =  $("#codeapp form :input[id=Code]").val();
+ 
+ var name = $("#codeapp .codeName").text();
+ 
+ var date = $("#codeapp .codeDate").text();
+ 
+ var content = convert(hcode);
+ 
+ 
+ 
+
+document.getElementById("blog").innerHTML = '<div id="card"><div class="card_content"><h2 class="card_title">'+ name+'</h2><p class="card_text">'+date+'</p><div class="blogtext">'+content+'</div><button  onclick="back();" class="btn card_btn">Back</button></div></div>';
+    
+    $("#blog").show()
+}
+
+function back() {
+    
+    $("#main").show();
+    
+    $("#blog").hide();
+    
+}
+
+$("#code").click(function(){
+    
+    swal("This is a Blog CMS specially for Sololearn! \n \n By using this you can create your own blog for free! \n \n Easily too it supports markdown!\n \n Created By: Abhi for sololearn Community!");
+    
+})
+
+    </script>
+</html>
